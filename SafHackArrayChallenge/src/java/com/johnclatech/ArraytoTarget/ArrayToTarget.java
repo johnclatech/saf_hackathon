@@ -23,6 +23,7 @@ public class ArrayToTarget {
 
         HashMap result = new HashMap();
         int target = 9;
+        result.put("settarget", target);
 
         int arr_size = arry.length;
         try {
@@ -62,7 +63,7 @@ public class ArrayToTarget {
 
         try {
             data = compute(arry, arr_size, operation);
-            
+
             result.putAll(data);
 
             if (!result.isEmpty()) {
@@ -128,23 +129,33 @@ public class ArrayToTarget {
             r = arr_size - 1;
             while (l < r) {
                 if (("sum").equalsIgnoreCase(operation)) {
-                    int sum = A[l] + A[r];
+                    long num1 = A[l];
+                    long num2 = A[r];
+                    long sum = (num2 + num1);
                     r--;
                     result.put("results", sum);
                 } else if (("divide").equalsIgnoreCase(operation)) {
-                    double division = (A[l] / A[r]);
+                    long num1 = A[l];
+                    long num2 = A[r];
+                    double division = ((double)num2 / (double)num1);
                     String div = String.format("%.2f", division);
 //                    double new_value = Double.valueOf(div);
                     r--;
                     result.put("results", div);
                 } else if (("multiply").equalsIgnoreCase(operation)) {
-                    double multiple = A[l] * A[r];
+                    long num1 = A[l];
+                    long num2 = A[r];
+                    double multiple = (num2 * num1);
                     r--;
                     result.put("results", multiple);
-                } else if (("substract").equalsIgnoreCase(operation)) {
-                    int subtract = A[l] - A[r];
+                } else if (("subtract").equalsIgnoreCase(operation)) {
+                    long num1 = A[l];
+                    long num2 = A[r];
+                    long subtract = (num2 - num1);
                     r--;
                     result.put("results", subtract);
+                } else {
+                    result.put("results", 0);
                 }
             }
         } catch (Exception e) {
@@ -152,8 +163,6 @@ public class ArrayToTarget {
             e.printStackTrace(new PrintWriter(sw));
             Logger.getLogger(IncomingRequest.class.getName()).log(Level.SEVERE, null, sw);
         }
-
         return result;
     }
-
 }

@@ -53,14 +53,14 @@ public class IncomingRequest {
      * @throws java.sql.SQLException
      */
     @WebMethod(operationName = "GetIndices")
-    public void RequestEnty(@WebParam(name = "key") String txt, @WebParam(name = "value") String value,
-            @WebParam(name = "Authkey") String authkey, @WebParam(name = "Response", mode = WebParam.Mode.OUT) Holder<String> Response) throws ClassNotFoundException, SQLException {
+    public void Requestenty(@WebParam(name = "value") String value, @WebParam(name = "key") String key, @WebParam(name = "Authkey") String authkey,
+            @WebParam(name = "Response", mode = WebParam.Mode.OUT) Holder<String> Response) throws ClassNotFoundException, SQLException {
 
         try {
             HashMap<String, Object> MessageFromChannel = new HashMap<String, Object>();
             String RefNo = getMessageID("SAFARICOM");
             System.out.println("com.johnclatech.ServiceEntry.IncomingRequest.RequestEnty() : EnrtyId:" + RefNo);
-            if (!("").equals(value)) {
+            if (!("").equals(value) && ("array").equalsIgnoreCase(key)) {
                 MessageFromChannel = (JSONObject) new JSONParser().parse(DecodeMessage(value));
 
                 //Authenticate the request with the salted hash
