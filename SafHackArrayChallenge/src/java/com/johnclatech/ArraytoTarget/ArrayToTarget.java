@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class ArrayToTarget {
 
-    public static HashMap addtotarget(int[] arry) throws Exception {
+    public static HashMap GetIndextotarget(int[] arry) throws Exception {
 
         HashMap result = new HashMap();
         int target = 9;
@@ -50,11 +50,13 @@ public class ArrayToTarget {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw));
             Logger.getLogger(IncomingRequest.class.getName()).log(Level.SEVERE, null, sw);
+            result.put("Status", "02");
+            result.put("Error Occured: ", "" + sw);
         }
         return result;
     }
 
-    public static HashMap operations(int[] arry, String operation) {
+    public static HashMap GetToComputeOperations(int[] arry, String operation) {
 
         HashMap result = new HashMap();
         HashMap data = new HashMap();
@@ -83,6 +85,9 @@ public class ArrayToTarget {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw));
             Logger.getLogger(IncomingRequest.class.getName()).log(Level.SEVERE, null, sw);
+            result.put("Status", "02");
+            result.put("Error Occured: ", "" + sw);
+            
         }
 
         return result;
@@ -114,6 +119,8 @@ public class ArrayToTarget {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw));
             Logger.getLogger(IncomingRequest.class.getName()).log(Level.SEVERE, null, sw);
+            result.put("Status", "02");
+            result.put("Error Occured: ", "" + sw);
         }
         return result;
     }
@@ -162,6 +169,8 @@ public class ArrayToTarget {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw));
             Logger.getLogger(IncomingRequest.class.getName()).log(Level.SEVERE, null, sw);
+            result.put("Status", "02");
+            result.put("Error Occured: ", "" + sw);
         }
         return result;
     }

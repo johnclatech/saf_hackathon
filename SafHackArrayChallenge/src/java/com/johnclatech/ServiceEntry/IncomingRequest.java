@@ -37,7 +37,7 @@ import sun.misc.BASE64Decoder;
 @Stateless()
 public class IncomingRequest {
 
-    ProcessMessage scheduler = new ProcessMessage();
+    MessageRoutingEngine scheduler = new MessageRoutingEngine();
 
     /**
      * This is a sample web service operation that receives a request
