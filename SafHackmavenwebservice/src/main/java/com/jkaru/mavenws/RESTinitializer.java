@@ -36,8 +36,7 @@ public class RESTinitializer  {
                 proc.Process2(request);
                 routingContext
                         .vertx()
-                        .setTimer(5000,tid -> routingContext.next());
-                
+                        .setTimer(5000,tid -> routingContext.next());              
                });
        
        

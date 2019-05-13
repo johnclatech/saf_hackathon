@@ -1,6 +1,6 @@
 package process;
 
-import LoanReversal.Function;
+import DbUpdater.Function;
 import Utilities.Logs;
 import java.sql.SQLException;
 import java.text.ParseException;

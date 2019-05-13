@@ -33,10 +33,12 @@ public class WSConsumeCalculator {
             try (Scanner input = new Scanner(System.in)) {
                 System.out.println("Enter the Operation :");
                 value = input.nextLine();
-                System.err.println("Operation entered is : " + value);
                 enums = ENUMSOperations.valueOf(value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase());
+            
             }
-
+            
+            System.out.println("Operation : ( " + enums + " ) Accepted!");
+            
             switch (enums) {
                 case Add:
                     MessageFromChannel.put("soapaction", "Add");
@@ -72,6 +74,7 @@ public class WSConsumeCalculator {
         } catch (Exception ex) {
             StringWriter sw = new StringWriter();
             ex.printStackTrace(new PrintWriter(sw));
+            System.err.println("Operation : ( " + value + " ) Rejected");
             System.out.println("Exception: " + sw.toString());
         }
     }

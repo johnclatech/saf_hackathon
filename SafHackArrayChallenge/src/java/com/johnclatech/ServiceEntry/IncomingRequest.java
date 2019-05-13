@@ -59,6 +59,7 @@ public class IncomingRequest {
         try {
             HashMap<String, Object> MessageFromChannel = new HashMap<String, Object>();
             String RefNo = getMessageID("SAFARICOM");
+            MessageFromChannel.put("refno", RefNo);
             System.out.println("com.johnclatech.ServiceEntry.IncomingRequest.RequestEnty() : EnrtyId:" + RefNo);
             if (!("").equals(value) && ("array").equalsIgnoreCase(key)) {
                 MessageFromChannel = (JSONObject) new JSONParser().parse(DecodeMessage(value));

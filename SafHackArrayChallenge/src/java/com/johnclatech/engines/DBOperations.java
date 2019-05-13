@@ -367,7 +367,7 @@ public class DBOperations {
             uhm.clear();
             uhm.put("SET", "[color] = '" + vehiclecolor + "',[dateupdated] = '" + updatedate + "',[available] = '" + available + "'");
             uhm.put("TABLE", "[HackathonDB].[dbo].[tb_VehicleDetails]");
-            uhm.put("WHERE", "[regno] = '" + vehicleregno + "' AND [deleted] = '0' AND [available] = '1'");
+            uhm.put("WHERE", "[regno] = '" + vehicleregno + "' AND [deleted] = '0'");
             affectedrows = dbf.Update(uhm);
 
         } catch (Exception ex) {
@@ -429,7 +429,7 @@ public class DBOperations {
             chm.clear();
             chm.put("COLS", "*");
             chm.put("TABLE", "[HackathonDB].[dbo].[tb_VehicleDetails]");
-            chm.put("WHERE", "[carmake] LIKE '%" + vehiclename + "%' OR [color] LIKE '%" + vehiclecolor + "%' OR [available] LIKE '%" + available + "%' AND [deleted] = '0'");
+            chm.put("WHERE", "[carmake] LIKE '%" + vehiclename + "%' AND [color] LIKE '%" + vehiclecolor + "%' AND [available] LIKE '%" + available + "%' AND [deleted] = '0'");
             JSONObject checkquery = dbf.queryJsonNav(chm);
             if (checkquery.isEmpty()) {
                 cardetails.put("success", false);
@@ -456,14 +456,15 @@ public class DBOperations {
      */
     public int DeleteSpecificVehicles(HashMap vehiclereq) {
         HashMap cardetails = new HashMap();
-        String available = vehiclereq.get("available") == "" ? "" : vehiclereq.get("available").toString().trim();
+        String vehicleregno = vehiclereq.get("vehicleregno").toString().trim();
+
         int affectedrows = 0;
         try {
             JSONObject uhm = new JSONObject();
             uhm.clear();
-            uhm.put("SET", "[deleted] = '1'");
+            uhm.put("SET", "[deleted] = '1', [available] = '0'");
             uhm.put("TABLE", "[HackathonDB].[dbo].[tb_VehicleDetails]");
-            uhm.put("WHERE", "[available] = '0' and [deleted] = '0'");
+            uhm.put("WHERE", "[regno] = '"+vehicleregno+"' AND [available] = '1' and [deleted] = '0'");
             affectedrows = dbf.Update(uhm);
 
         } catch (Exception ex) {

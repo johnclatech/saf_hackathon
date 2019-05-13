@@ -250,51 +250,53 @@ public class CarManagerEngine {
     public JSONObject UpdateVehicleDetails(HashMap Mydata) throws ClassNotFoundException, SQLException {
         JSONObject MessageToChannel = (JSONObject) Mydata;
         int affectedrows = 0;
+
+//        the commented region can be uncommented if more values requires to be updated in the system
         try {
             //check if vehicle is already the vehicle is registered in the system
             boolean checkvehicleDetails = dbops.CheckVehicleDetails(MessageToChannel);
 
             if (checkvehicleDetails == true) {
                 //check details of the v-make to v-model(entering a vehicle whose make dont exist,entering a vehicle make whose model is for another v-make)
-                boolean checkvehiclemake = dbops.CheckVehicleByName(MessageToChannel);
-                if (checkvehiclemake) {
-                    boolean checkvehiclemodel = dbops.CheckVehicleByType(MessageToChannel);
-                    if (checkvehiclemodel) {
-                        boolean checkvehiclecolor = dbops.CheckVehicleByColor(MessageToChannel);
-                        if (checkvehiclecolor) {
-                            boolean checkvehiclemaketomodel = dbops.CheckVehicleMakeToModel(MessageToChannel);
-                            if (checkvehiclemaketomodel) {
-                                //update the vehicle in the system
-                                affectedrows = dbops.UpdateVehicleDetails(MessageToChannel);
-                                if (affectedrows > 0) {
-                                    MessageToChannel.put("dbaffected", affectedrows);
-                                    MessageToChannel.put("Status", successcode);
-                                    MessageToChannel.put("success: ", true);
-                                    MessageToChannel.put("StatusMessage", "Process completed successfully");
-                                } else {
-                                    MessageToChannel.put("dbaffected", affectedrows);
-                                    MessageToChannel.put("Status", failcode);
-                                    MessageToChannel.put("success: ", false);
-                                    MessageToChannel.put("StatusMessage", "Process failed");
-                                }
-
-                            } else {
-                                MessageToChannel.put("Status", existcode);
-                                MessageToChannel.put("StatusMessage", "The vehicle model does not belong to this car make");
-                            }
-                        } else {
-                            MessageToChannel.put("Status", existcode);
-                            MessageToChannel.put("StatusMessage", "The vehicle color does not exist");
-                        }
-
+//                boolean checkvehiclemake = dbops.CheckVehicleByName(MessageToChannel);
+//                if (checkvehiclemake) {
+//                    boolean checkvehiclemodel = dbops.CheckVehicleByType(MessageToChannel);
+//                    if (checkvehiclemodel) {
+                boolean checkvehiclecolor = dbops.CheckVehicleByColor(MessageToChannel);
+                if (checkvehiclecolor) {
+//                            boolean checkvehiclemaketomodel = dbops.CheckVehicleMakeToModel(MessageToChannel);
+//                            if (checkvehiclemaketomodel) {
+                    //update the vehicle in the system
+                    affectedrows = dbops.UpdateVehicleDetails(MessageToChannel);
+                    if (affectedrows > 0) {
+                        MessageToChannel.put("dbaffected", affectedrows);
+                        MessageToChannel.put("Status", successcode);
+                        MessageToChannel.put("success: ", true);
+                        MessageToChannel.put("StatusMessage", "Process completed successfully");
                     } else {
-                        MessageToChannel.put("Status", existcode);
-                        MessageToChannel.put("StatusMessage", "The vehicle model for the car make does not exist\n ensure it is added in the system");
+                        MessageToChannel.put("dbaffected", affectedrows);
+                        MessageToChannel.put("Status", failcode);
+                        MessageToChannel.put("success: ", false);
+                        MessageToChannel.put("StatusMessage", "Process failed");
                     }
+
+//                            } else {
+//                                MessageToChannel.put("Status", existcode);
+//                                MessageToChannel.put("StatusMessage", "The vehicle model does not belong to this car make");
+//                            }
                 } else {
                     MessageToChannel.put("Status", existcode);
-                    MessageToChannel.put("StatusMessage", "The vehicle make does not exist in the system");
+                    MessageToChannel.put("StatusMessage", "The vehicle color does not exist");
                 }
+
+//                    } else {
+//                        MessageToChannel.put("Status", existcode);
+//                        MessageToChannel.put("StatusMessage", "The vehicle model for the car make does not exist\n ensure it is added in the system");
+//                    }
+//                } else {
+//                    MessageToChannel.put("Status", existcode);
+//                    MessageToChannel.put("StatusMessage", "The vehicle make does not exist in the system");
+//                }
             } else {
                 MessageToChannel.put("Status", existcode);
                 MessageToChannel.put("StatusMessage", "Vehicle does not exist in the system");
@@ -362,7 +364,7 @@ public class CarManagerEngine {
         HashMap somedata = new HashMap();
         try {
             HashMap allvehicles = dbops.GetSpecificVehicles(MessageToChannel);
-             boolean success = (boolean) allvehicles.get("success");
+            boolean success = (boolean) allvehicles.get("success");
             if (success) {
                 somedata = (HashMap) allvehicles.get("vehicledetails");
 
@@ -374,9 +376,8 @@ public class CarManagerEngine {
             } else {
                 MessageToChannel.put("Status", failcode);
                 MessageToChannel.put("success: ", false);
-                MessageToChannel.put("StatusMessage", "Process failed");
+                MessageToChannel.put("StatusMessage", "No car with the specified attributes in the show room");
                 MessageToChannel.put("AllAvailableVehicles", somedata);
-                logs.log(Logs.logPreString() + "" + MessageToChannel.get("StatusMessage").toString(), MessageToChannel.get("refno").toString().trim(), field4);
 
             }
 
@@ -402,16 +403,23 @@ public class CarManagerEngine {
         int affectedrows = 0;
 
         try {
-            affectedrows = dbops.DeleteSpecificVehicles(MessageToChannel);
-            if (affectedrows > 0) {
-                MessageToChannel.put("Status", successcode);
-                MessageToChannel.put("success: ", true);
-                MessageToChannel.put("StatusMessage", "Process completed successfully");
+            boolean checkvehicleDetails = dbops.CheckVehicleDetails(MessageToChannel);
+
+            if (checkvehicleDetails == true) {
+                affectedrows = dbops.DeleteSpecificVehicles(MessageToChannel);
+                if (affectedrows > 0) {
+                    MessageToChannel.put("Status", successcode);
+                    MessageToChannel.put("success: ", true);
+                    MessageToChannel.put("StatusMessage", "Process completed successfully");
+                } else {
+                    MessageToChannel.put("Status", failcode);
+                    MessageToChannel.put("success: ", false);
+                    MessageToChannel.put("StatusMessage", "Process delete failed");
+                    logs.log(Logs.logPreString() + "" + MessageToChannel.get("StatusMessage").toString(), MessageToChannel.get("refno").toString().trim(), field4);
+                }
             } else {
-                MessageToChannel.put("Status", failcode);
-                MessageToChannel.put("success: ", false);
-                MessageToChannel.put("StatusMessage", "Process delete failed");
-                logs.log(Logs.logPreString() + "" + MessageToChannel.get("StatusMessage").toString(), MessageToChannel.get("refno").toString().trim(), field4);
+                MessageToChannel.put("Status", existcode);
+                MessageToChannel.put("StatusMessage", "Vehicle does not exist in the system");
             }
 
         } catch (Exception ex) {
