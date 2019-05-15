@@ -310,6 +310,7 @@ public class DBOperations {
 
     /**
      * Gets Vehicle number Existence in the vehicle relation
+     * commented fields allows for update of other fields
      *
      * @param make HashMap containing a name from requesting function
      * @return

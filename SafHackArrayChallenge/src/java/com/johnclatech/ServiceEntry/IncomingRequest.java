@@ -148,7 +148,7 @@ public class IncomingRequest {
             MessageDigest message = MessageDigest.getInstance("SHA-512");
             message.update(MyValue.getBytes());
             byte byteData[] = message.digest();
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < byteData.length; i++) {
                 sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
             }

@@ -102,7 +102,7 @@ public class ArrayToTarget {
 
             /* Now look for the two candidates in the sorted array*/
             l = 0;
-            r = arr_size - 1;
+            r = arr_size -1;
             while (l < r) {
                 if (sum == (A[l] + A[r])) {
                     result.put("index1", l);
