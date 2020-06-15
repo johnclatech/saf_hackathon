@@ -29,7 +29,7 @@ public class WSConsumer {
 
     Utilities utils = new Utilities();
 //    Logs logs = new Logs();
-    private static transient String IPRS_SERVICE_NAMESPACE_TNS = "http://tempuri.org/";
+    private static transient String SERVICE_NAMESPACE_TNS = "http://tempuri.org/";
     private static transient String SOAPACTIONHEAD = null;
 
     public static HashMap<String, String> settings = new HashMap();
@@ -101,7 +101,7 @@ public class WSConsumer {
                 // Set the appropriate HTTP parameters.
                 httpURLConnection.setRequestProperty("Content-Length", String.valueOf(byteData.length));
                 httpURLConnection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
-                httpURLConnection.setRequestProperty("SOAPAction", IPRS_SERVICE_NAMESPACE_TNS + SOAPACTIONHEAD);
+                httpURLConnection.setRequestProperty("SOAPAction", SERVICE_NAMESPACE_TNS + SOAPACTIONHEAD);
                 httpURLConnection.setRequestMethod("POST");
                 //set the timeout in milliseconds
                 httpURLConnection.setConnectTimeout(2500);
