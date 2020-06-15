@@ -22,11 +22,10 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-rx-java</artifactId>
-            <version>3.5.1</version>
-            <type>jar</type>
-        </dependency>
+  <groupId>io.vertx</groupId>
+  <artifactId>vertx-core</artifactId>
+  <version>[3.5.4,)</version>
+</dependency>
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-web</artifactId>
